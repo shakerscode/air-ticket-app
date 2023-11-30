@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 export default function FlightSearch() {
   const [
     searchTicket,
-    { data: allTicket = [], isLoading, isError, isSuccess },
+    { data: allTicket = [], isLoading, isSuccess },
   ] = useSearchTicketMutation();
   const navigate = useNavigate();
   const [errors, setErrors] = useState(null);

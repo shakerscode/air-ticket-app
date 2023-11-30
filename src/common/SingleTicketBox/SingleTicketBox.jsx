@@ -1,11 +1,13 @@
 import { Container, Row, Col } from 'react-bootstrap';
 import React from "react";
 import "./SingleTicketBox.css"
+import { useNavigate } from 'react-router-dom';
 
 export default function SingleTicketBox({data}){ 
+    const navigate = useNavigate()
     return(
         <>
-            <div className="mt-3 border rounded p-3">
+            <div onClick={()=> navigate(`/ticket/${data?.id}`, { state: { ticket: data } })} className=" border rounded p-3 cursor-pointer" style={{ cursor: 'pointer' }}>
                 <Row>
                     <Col className="ticketEmphasize font-weight-bold">
                         10:00am - 2:00pm

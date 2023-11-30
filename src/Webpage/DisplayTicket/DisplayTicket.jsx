@@ -8,6 +8,8 @@ import { useLocation } from "react-router-dom";
 export default function DsiplayTicket(){
     const location = useLocation();
     const ticketsData = location.state && location.state.tickets;
+    const {data} = useSearchTicketMutation();
+    console.log(data);
     /*
     Note for Ticket info display: 
         1. use loader or a way to get info from the backend api endpoint

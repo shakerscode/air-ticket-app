@@ -8,6 +8,7 @@ import FlightSearch from "./common/FlightSearch/FlightSearch.jsx";
 import DsiplayTicket from "./Webpage/DisplayTicket/DisplayTicket.jsx"; 
 import { Provider } from "react-redux";
 import { store } from "./services/sotre.js";
+import SingleTicketDetails from "./common/SingleTicketDetails/SingleTicketDetails.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/ticket",
         element: <DsiplayTicket />,
+      },
+      {
+        path: "/ticket/:id",
+        element: <SingleTicketDetails />,
       },
     ],
   },

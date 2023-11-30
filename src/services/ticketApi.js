@@ -19,8 +19,24 @@ export const ticketApi = createApi({
         },
       }),
     }), 
+    getSingleTicket: builder.mutation({
+      query: (id) => ({
+        url: `reciept`,
+        method: 'GET',
+        params: {
+          id: id
+        },
+      }),
+    }), 
+    createReciept: builder.mutation({
+      query: (payload) => ({
+        url: `api/reciepts/create`,
+        method: 'POST', 
+        body:payload
+      }),
+    }), 
   }),
 });
 
-export const { useGetTicketsQuery, useSearchTicketMutation } = ticketApi;
+export const { useGetTicketsQuery, useSearchTicketMutation, useGetSingleTicketMutation, useCreateRecieptMutation } = ticketApi;
 
