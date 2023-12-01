@@ -35,6 +35,12 @@ export default function FlightSearch() {
     travelerNum: 0,
   });
 
+  useEffect(()=>{
+    if(formData){
+      localStorage.setItem("formData", JSON.stringify(formData))
+    }
+  },[formData])
+  
   // handle input change, maintain the updated change
   const handleInputChange = (event) => {
     if (typeof event === typeof "") {

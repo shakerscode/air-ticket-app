@@ -9,6 +9,7 @@ import DsiplayTicket from "./Webpage/DisplayTicket/DisplayTicket.jsx";
 import { Provider } from "react-redux";
 import { store } from "./services/sotre.js";
 import SingleTicketDetails from "./common/SingleTicketDetails/SingleTicketDetails.jsx";
+import UserReciepts from "./common/UserReciepts/UserReciepts.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/ticket/:id",
         element: <SingleTicketDetails />,
+      },
+      {
+        path: "/reciepts",
+        element: <UserReciepts />,
       },
     ],
   },

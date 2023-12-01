@@ -21,7 +21,7 @@ export const ticketApi = createApi({
     }), 
     getSingleTicket: builder.mutation({
       query: (id) => ({
-        url: `reciept`,
+        url: `api/reciepts/reciept`,
         method: 'GET',
         params: {
           id: id

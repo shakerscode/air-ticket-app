@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useGetSingleTicketMutation } from "../../services/ticketApi";
+import {
+  useCreateRecieptMutation,
+  useGetSingleTicketMutation,
+} from "../../services/ticketApi";
 import SingleTicketBox from "../SingleTicketBox/SingleTicketBox";
 import { Button, InputGroup } from "react-bootstrap";
 
@@ -9,8 +12,15 @@ function SingleTicketDetails() {
   const navigate = useNavigate();
   const [getSingleTicket, { data, isLoading, isError }] =
     useGetSingleTicketMutation();
+  const [
+    createReciept,
+    { data: createdData, isLoading: creationLoading, isError: creatingError },
+  ] = useCreateRecieptMutation();
   const location = useLocation();
+  const [userData, setUserData] = useState(null);
   const ticketData = location.state && location.state.ticket;
+  const formData = localStorage.getItem("formData");
+  const formDataParsed = JSON.parse(formData);
 
   useEffect(() => {
     if (id) {
@@ -18,8 +28,27 @@ function SingleTicketDetails() {
     }
   }, [id]);
 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+  };
+
+  const handleCreateReciept = async () => {
+    if (userData) {
+      await createReciept({
+        ...userData,
+        airport: formDataParsed.goingPort,
+        time: formDataParsed.departDate,
+      });
+      navigate("/reciepts");
+    }
+  };
+
   return (
-    <div className="bg-light " style={{height:"100vh"}}>
+    <div className="bg-light " style={{ height: "100vh" }}>
       <div className="h-100 " style={{ maxWidth: "1280px", margin: "auto" }}>
         <button
           onClick={() => navigate(-1)}
@@ -51,25 +80,25 @@ function SingleTicketDetails() {
               <strong>Type:</strong> RoundTrip
             </p>
             <p className="fw-normal" style={{ fontSize: "14px" }}>
-              <strong>Class</strong>: Economics
+              <strong>Class</strong>: {formDataParsed.flightClass}
             </p>
             <p className="fw-normal" style={{ fontSize: "14px" }}>
-              <strong>Travelers</strong>: 2
+              <strong>Travelers</strong>: {formDataParsed.travelerNum}
             </p>
             <p className="fw-normal" style={{ fontSize: "14px" }}>
-              <strong>Leaving from</strong>: Economics
+              <strong>Leaving from</strong>: {formDataParsed.leavingPort}
             </p>
             <p className="fw-normal" style={{ fontSize: "14px" }}>
-              <strong>Going from</strong>: Economics
+              <strong>Going from</strong>: {formDataParsed.goingPort}
             </p>
             <p className="fw-normal" style={{ fontSize: "14px" }}>
-              <strong>Depart date</strong>: 21/11/2023
+              <strong>Depart date</strong>: {formDataParsed.departDate}
             </p>
             <p className="fw-normal" style={{ fontSize: "14px" }}>
-              <strong>Return date</strong>: 21/11/2023
+              <strong>Return date</strong>: {formDataParsed.returnDate}
             </p>
           </div>
-          <div className="w-75 h-100 bg-white p-3 shadow-sm border">
+          <div className="w-75 h-100 bg-white p-3 shadow-sm border rounded">
             <div className="">
               <SingleTicketBox data={ticketData} />
             </div>
@@ -81,9 +110,13 @@ function SingleTicketDetails() {
               ></div>
               <div className="mt-2 d-flex gap-4">
                 <div className="w-100">
-                  <label htmlFor="">Full Name*</label>
+                  <label htmlFor="">
+                    Full Name<span className="text-danger">*</span>
+                  </label>
                   <input
+                    onChange={handleInputChange}
                     type="text"
+                    name="businessName"
                     class="form-control"
                     placeholder="Recipient's name"
                     aria-label="Recipient's name"
@@ -91,17 +124,27 @@ function SingleTicketDetails() {
                   />
                 </div>
                 <div className="w-100">
-                  <label htmlFor="">Seats*</label>
+                  <label htmlFor="">
+                    Seats<span className="text-danger">*</span>
+                  </label>
                   <input
+                    onChange={handleInputChange}
+                    name="seats"
                     type="number"
                     class="form-control"
                     placeholder="Seats"
                     aria-label="Recipient's name"
                     aria-describedby="button-addon2"
+                    defaultValue={formDataParsed.travelerNum}
                   />
                 </div>
               </div>
-              <Button className="btn-primary mt-3">Buy Ticket</Button>
+              <Button
+                onClick={handleCreateReciept}
+                className="btn-primary mt-3"
+              >
+                Buy Ticket
+              </Button>
             </div>
           </div>
         </div>
