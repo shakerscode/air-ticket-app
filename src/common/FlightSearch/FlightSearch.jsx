@@ -13,8 +13,8 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./FlightSearch.css";
 import { useState, useEffect } from "react";
-import { useSearchTicketMutation } from "../../services/ticketApi";
 import { useNavigate } from "react-router-dom";
+import { useSearchTicketMutation } from "../../services/ticketApi";
 
 export default function FlightSearch() {
   const [
@@ -39,8 +39,8 @@ export default function FlightSearch() {
     if(formData){
       localStorage.setItem("formData", JSON.stringify(formData))
     }
-  },[formData])
-  
+  },[formData]) 
+
   // handle input change, maintain the updated change
   const handleInputChange = (event) => {
     if (typeof event === typeof "") {

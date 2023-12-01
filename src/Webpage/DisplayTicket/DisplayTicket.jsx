@@ -2,14 +2,14 @@ import React from "react";
 import FlightSearch from "../../common/FlightSearch/FlightSearch";
 import SingleTicketBox from "../../common/SingleTicketBox/SingleTicketBox";
 import { useSearchTicketMutation } from "../../services/ticketApi";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 export default function DsiplayTicket(){
     const location = useLocation();
     const ticketsData = location.state && location.state.tickets;
     const {data} = useSearchTicketMutation();
-    console.log(data);
+const navigate= useNavigate()
     /*
     Note for Ticket info display: 
         1. use loader or a way to get info from the backend api endpoint
@@ -20,9 +20,9 @@ export default function DsiplayTicket(){
     return(
         <>
         <div className="m-5">
-            <div id="search-flight" className="border rounded py-3">
+            {/* <div id="search-flight" className="border rounded py-3">
                 <FlightSearch/>
-            </div>
+            </div> */}
             <div 
             style={{background:"#232D3F", color:"white", fontFamily:"Raleway" }} 
             className="rounded mt-3 d-flex justify-content-center py-4">
@@ -40,7 +40,7 @@ export default function DsiplayTicket(){
             {
                 ticketsData?.length === 0 || ticketsData === null &&
                 <div className="d-flex justify-content-center gap-2 mt-4">
-                    <p>No data available</p> <span className="text-primary"><a href="#search-flight">Search some!</a></span>
+                    <p>No data available</p> <span className="text-primary" onClick={()=>navigate('/')}> Search some!</span>
                 </div>
             }
         </div>

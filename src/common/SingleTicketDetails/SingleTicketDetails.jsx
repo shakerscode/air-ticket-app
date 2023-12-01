@@ -6,27 +6,28 @@ import {
 } from "../../services/ticketApi";
 import SingleTicketBox from "../SingleTicketBox/SingleTicketBox";
 import { Button, InputGroup } from "react-bootstrap";
+import { generateRandomId } from "../../utils/utils";
 
-function SingleTicketDetails() {
-  const { id } = useParams();
+function SingleTicketDetails() { 
   const navigate = useNavigate();
-  const [getSingleTicket, { data, isLoading, isError }] =
-    useGetSingleTicketMutation();
   const [
     createReciept,
-    { data: createdData, isLoading: creationLoading, isError: creatingError },
+    { data: createdData, isLoading, isError: creatingError },
   ] = useCreateRecieptMutation();
   const location = useLocation();
   const [userData, setUserData] = useState(null);
   const ticketData = location.state && location.state.ticket;
   const formData = localStorage.getItem("formData");
   const formDataParsed = JSON.parse(formData);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (id) {
-      getSingleTicket(id);
+    if (createdData) {
+      navigate("/reciepts", { state: { reciept: createdData } });
+      localStorage.removeItem("reciepts")
     }
-  }, [id]);
+  }, [createdData]);
+ 
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -35,15 +36,20 @@ function SingleTicketDetails() {
       [name]: value,
     });
   };
+  const id= generateRandomId()
+  const userAllData={
+    ...userData,
+    airport: ticketData.from,
+    destination: ticketData.to,
+    time: ticketData.time,
+    id:"1"
+  }
 
   const handleCreateReciept = async () => {
     if (userData) {
-      await createReciept({
-        ...userData,
-        airport: formDataParsed.goingPort,
-        time: formDataParsed.departDate,
-      });
-      navigate("/reciepts");
+      await createReciept(userAllData);
+    } else {
+      setError("Failed to create the receipt");
     }
   };
 
@@ -77,7 +83,7 @@ function SingleTicketDetails() {
               style={{ height: "1px" }}
             ></div>
             <p className="fw-normal" style={{ fontSize: "14px" }}>
-              <strong>Type:</strong> RoundTrip
+              <strong>Type:</strong> {formDataParsed.flightType}
             </p>
             <p className="fw-normal" style={{ fontSize: "14px" }}>
               <strong>Class</strong>: {formDataParsed.flightClass}
@@ -116,7 +122,7 @@ function SingleTicketDetails() {
                   <input
                     onChange={handleInputChange}
                     type="text"
-                    name="businessName"
+                    name="customerName"
                     class="form-control"
                     placeholder="Recipient's name"
                     aria-label="Recipient's name"
@@ -135,15 +141,16 @@ function SingleTicketDetails() {
                     placeholder="Seats"
                     aria-label="Recipient's name"
                     aria-describedby="button-addon2"
-                    defaultValue={formDataParsed.travelerNum}
+                    defaultValue={0}
                   />
                 </div>
               </div>
+              {error && <p className="text-danger">{error}</p>}
               <Button
                 onClick={handleCreateReciept}
                 className="btn-primary mt-3"
               >
-                Buy Ticket
+                {isLoading ? "Loading..." : "Buy Ticket"}
               </Button>
             </div>
           </div>

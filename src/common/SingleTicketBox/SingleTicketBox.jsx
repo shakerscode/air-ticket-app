@@ -10,7 +10,7 @@ export default function SingleTicketBox({data}){
             <div onClick={()=> navigate(`/ticket/${data?.id}`, { state: { ticket: data } })} className=" border rounded p-3 cursor-pointer" style={{ cursor: 'pointer' }}>
                 <Row>
                     <Col className="ticketEmphasize font-weight-bold">
-                        10:00am - 2:00pm
+                        {data?.time}
                     </Col>
                     <Col className='ticketDetail'>
                         8h 32m (1 stop)
