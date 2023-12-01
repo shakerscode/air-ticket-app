@@ -42,7 +42,7 @@ function SingleTicketDetails() {
     airport: ticketData.from,
     destination: ticketData.to,
     time: ticketData.time,
-    id:"1"
+    id
   }
 
   const handleCreateReciept = async () => {

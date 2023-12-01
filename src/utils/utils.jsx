@@ -1,16 +1,12 @@
 export function generateRandomId() {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const idLength = 20;
+    const idLength = 5; 
     
     let randomId = '';
     for (let i = 0; i < idLength; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      randomId += characters.charAt(randomIndex);
+      const digit = Math.floor(Math.random() * 10);  
+      randomId += digit;
     }
-  
-    return randomId;
+    
+    return parseInt(randomId, 10); 
   }
-  
-
-  
   

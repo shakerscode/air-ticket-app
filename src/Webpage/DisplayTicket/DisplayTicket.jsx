@@ -19,7 +19,7 @@ const navigate= useNavigate()
     */
     return(
         <>
-        <div className="m-5">
+        <div className="m-5" style={{height:"80vh"}}>
             {/* <div id="search-flight" className="border rounded py-3">
                 <FlightSearch/>
             </div> */}
