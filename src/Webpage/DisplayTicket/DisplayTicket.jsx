@@ -1,5 +1,4 @@
-import React from "react";
-import FlightSearch from "../../common/FlightSearch/FlightSearch";
+import React from "react"; 
 import SingleTicketBox from "../../common/SingleTicketBox/SingleTicketBox";
 import { useSearchTicketMutation } from "../../services/ticketApi";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -10,19 +9,10 @@ export default function DsiplayTicket(){
     const ticketsData = location.state && location.state.tickets;
     const {data} = useSearchTicketMutation();
 const navigate= useNavigate()
-    /*
-    Note for Ticket info display: 
-        1. use loader or a way to get info from the backend api endpoint
-        2. feel free to adjust what to be display on the ticket, for example only keep the things we need, like depart time and price and delete others
-        3. use a for loop in the return statement to display all the ticket info (but there are other ways to do it, feel free to choose other ways)
-        4. the SingleTicketBox can receive parameters and can be replaced easily with other things
-    */
+   
     return(
         <>
-        <div className="m-5" style={{height:"80vh"}}>
-            {/* <div id="search-flight" className="border rounded py-3">
-                <FlightSearch/>
-            </div> */}
+        <div className="m-5" style={{height:"80vh"}}> 
             <div 
             style={{background:"#232D3F", color:"white", fontFamily:"Raleway" }} 
             className="rounded mt-3 d-flex justify-content-center py-4">

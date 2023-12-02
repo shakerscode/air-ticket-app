@@ -75,7 +75,7 @@ function SingleTicketDetails() {
           className="w-100 bg-secondary mb-2"
           style={{ height: "1px" }}
         ></div>
-        <div className="d-flex py-4 gap-5">
+        <div className="d-md-flex py-4 gap-5">
           <div className="w-25 h-50 bg-white p-3 shadow-sm border rounded">
             <h4 className="fs-5">Flight Details</h4>
             <div
